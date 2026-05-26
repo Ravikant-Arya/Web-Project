@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI & ML Notes Dashboard | Premium Study Portal</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* Premium vibrant palette - NO BLUE */
+            --violet-400: #a78bfa;
+            --violet-500: #8b5cf6;
+            --violet-600: #7c3aed;
+            --violet-700: #6d28d9;
+            --magenta-400: #f472b6;
+            --magenta-500: #ec4899;
+            --magenta-600: #db2777;
+            --coral-400: #fb7185;
+            --coral-500: #f43f5e;
+            --coral-600: #e11d48;
+            --emerald-400: #34d399;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --gold-400: #fbbf24;
+            --gold-500: #f59e0b;
+            --gold-600: #d97706;
+            --amber-400: #fbbf24;
+            --amber-500: #f59e0b;
+            --amber-600: #d97706;
+            --peach-400: #fb923c;
+            --peach-500: #f97316;
+            --peach-600: #ea580c;
+            --rose-400: #fb7185;
+            --rose-500: #f43f5e;
+            --teal-400: #2dd4bf;
+            --teal-500: #14b8a6;
+
+            /* Theme Colors */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #1e1e2d;
+            --bg-card-hover: #252538;
+            --text-primary: #f1f0f5;
+            --text-secondary: #c5c4d0;
+            --text-tertiary: #9897a8;
+            --border-color: #2a2a3a;
+            --border-glow: #3a3a50;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-glow-violet: 0 0 40px rgba(139, 92, 246, 0.2);
+            --shadow-glow-magenta: 0 0 40px rgba(236, 72, 153, 0.2);
+            --shadow-glow-emerald: 0 0 40px rgba(16, 185, 129, 0.2);
+            --shadow-glow-gold: 0 0 40px rgba(245, 158, 11, 0.2);
+            --shadow-glow-coral: 0 0 40px rgba(244, 63, 94, 0.2);
+            --glass-bg: rgba(30, 30, 45, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(20px);
+            --nav-bg: rgba(18, 18, 26, 0.85);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #faf9f7;
+            --bg-secondary: #f3f1ee;
+            --bg-tertiary: #ebe8e3;
+            --bg-card: #ffffff;
+            --bg-card-hover: #faf8f5;
+            --text-primary: #1a1a20;
+            --text-secondary: #4a4855;
+            --text-tertiary: #6e6c7a;
+            --border-color: #e5e2dd;
+            --border-glow: #d5d2cc;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+            --shadow-glow-violet: 0 0 40px rgba(109, 40, 217, 0.1);
+            --shadow-glow-magenta: 0 0 40px rgba(219, 39, 119, 0.1);
+            --shadow-glow-emerald: 0 0 40px rgba(5, 150, 105, 0.1);
+            --shadow-glow-gold: 0 0 40px rgba(217, 119, 6, 0.1);
+            --shadow-glow-coral: 0 0 40px rgba(225, 29, 72, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(0, 0, 0, 0.06);
+            --nav-bg: rgba(250, 249, 247, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: 'Inter', 'Outfit', system-ui, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ==================== CANVAS BACKGROUND ==================== */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ==================== SCROLL PROGRESS BAR ==================== */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            z-index: 10000;
+            border-radius: 0 3px 3px 0;
+            background: linear-gradient(90deg, #f59e0b, #f43f5e, #ec4899, #8b5cf6, #10b981);
+            transition: width 0.15s linear;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 40px rgba(236, 72, 153, 0.4);
+        }
+
+        /* ==================== STICKY NAVIGATION ==================== */
+        .sticky-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .sticky-nav.scrolled {
+            padding: 8px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .nav-logo {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f59e0b, #f97316, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            white-space: nowrap;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 100px;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.25), rgba(236, 72, 153, 0.2));
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        [data-theme="light"] .nav-links a:hover,
+        [data-theme="light"] .nav-links a.active {
+            color: #1a1a20;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(236, 72, 153, 0.1));
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 56px;
+            height: 28px;
+            background: var(--bg-tertiary);
+            border-radius: 28px;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            transition: all 0.4s ease;
+            flex-shrink: 0;
+        }
+        .theme-toggle .toggle-knob {
+            position: absolute;
+            top: 2px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            transition: all 0.4s cubic-bezier(0.68, -0.15, 0.27, 1.15);
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.5);
+        }
+        [data-theme="light"] .theme-toggle .toggle-knob {
+            left: 29px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.5);
+        }
+        .theme-toggle .toggle-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        .toggle-icon.sun {
+            right: 7px;
+            opacity: 0;
+        }
+        .toggle-icon.moon {
+            left: 7px;
+            opacity: 1;
+        }
+        [data-theme="light"] .toggle-icon.sun {
+            opacity: 1;
+        }
+        [data-theme="light"] .toggle-icon.moon {
+            opacity: 0;
+        }
+
+        /* Mobile nav toggle */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        /* ==================== MAIN CONTAINER ==================== */
+        .main-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 20px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border-radius: 100px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            animation: floatBadge 3s ease-in-out infinite;
+        }
+        @keyframes floatBadge {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 14px rgba(16, 185, 129, 0);
+            }
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 18px;
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 15%, #f43f5e 35%, #ec4899 55%, #8b5cf6 75%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s ease-in-out infinite;
+            background-size: 200% 200%;
+        }
+        @keyframes shimmer {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 650px;
+            margin-bottom: 36px;
+            letter-spacing: 0.02em;
+            line-height: 1.6;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: #fff;
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.35);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 40px rgba(236, 72, 153, 0.45);
+        }
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1.5px solid var(--border-color);
+            backdrop-filter: var(--glass-blur);
+        }
+        .btn-secondary:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+            transform: translateY(-3px);
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+        }
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        /* Floating orbs behind hero */
+        .hero-orbs {
+            position: absolute;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .hero-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+        .hero-orb:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: #ec4899;
+            top: -100px;
+            left: -120px;
+            animation-delay: 0s;
+        }
+        .hero-orb:nth-child(2) {
+            width: 350px;
+            height: 350px;
+            background: #8b5cf6;
+            top: 50%;
+            right: -100px;
+            animation-delay: 2s;
+        }
+        .hero-orb:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            background: #f59e0b;
+            bottom: -80px;
+            left: 30%;
+            animation-delay: 4s;
+        }
+        .hero-orb:nth-child(4) {
+            width: 280px;
+            height: 280px;
+            background: #10b981;
+            top: 30%;
+            left: 50%;
+            animation-delay: 6s;
+        }
+        @keyframes orbFloat {
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+            25% {
+                transform: translate(40px, -30px) scale(1.1);
+            }
+            50% {
+                transform: translate(-20px, 25px) scale(0.9);
+            }
+            75% {
+                transform: translate(-35px, -20px) scale(1.05);
+            }
+        }
+
+        /* ==================== 3D TILT CARDS GRID ==================== */
+        .unit-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 40px 0 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .unit-card {
+            perspective: 1000px;
+            cursor: pointer;
+            position: relative;
+        }
+        .unit-card-inner {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            box-shadow: var(--shadow-md);
+        }
+        .unit-card-inner:hover {
+            transform: translateY(-10px) rotateX(3deg) rotateY(-2deg);
+            border-color: transparent;
+            box-shadow: var(--shadow-lg), var(--shadow-glow-violet);
+        }
+        .unit-card-inner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        .unit-card:nth-child(1) .unit-card-inner::before {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.1));
+        }
+        .unit-card:nth-child(2) .unit-card-inner::before {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(244, 63, 94, 0.1));
+        }
+        .unit-card:nth-child(3) .unit-card-inner::before {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(245, 158, 11, 0.1));
+        }
+        .unit-card:nth-child(4) .unit-card-inner::before {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(249, 115, 22, 0.1));
+        }
+        .unit-card:nth-child(5) .unit-card-inner::before {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.2), rgba(139, 92, 246, 0.1));
+        }
+        .unit-card-inner:hover::before {
+            opacity: 1;
+        }
+
+        .unit-card-icon {
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+            display: block;
+            transition: transform 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .unit-card-inner:hover .unit-card-icon {
+            transform: scale(1.2) rotate(-8deg);
+        }
+        .unit-card-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .unit-card-label {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+        .unit-card-glow {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        .unit-card:nth-child(1) .unit-card-glow {
+            background: #8b5cf6;
+        }
+        .unit-card:nth-child(2) .unit-card-glow {
+            background: #ec4899;
+        }
+        .unit-card:nth-child(3) .unit-card-glow {
+            background: #10b981;
+        }
+        .unit-card:nth-child(4) .unit-card-glow {
+            background: #f59e0b;
+        }
+        .unit-card:nth-child(5) .unit-card-glow {
+            background: #f43f5e;
+        }
+        .unit-card-inner:hover .unit-card-glow {
+            opacity: 0.35;
+        }
+
+        /* Active card */
+        .unit-card.active .unit-card-inner {
+            border-color: #f59e0b;
+            box-shadow: var(--shadow-lg), 0 0 50px rgba(245, 158, 11, 0.3);
+            transform: translateY(-8px);
+        }
+
+        /* ==================== SUBMISSION INFO ==================== */
+        .submission-section {
+            padding: 50px 0;
+            position: relative;
+            z-index: 1;
+        }
+        .submission-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 36px 40px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .submission-card:hover {
+            box-shadow: var(--shadow-lg), var(--shadow-glow-gold);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .submission-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.08);
+            pointer-events: none;
+        }
+        .submission-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: #f59e0b;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .submission-row {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .submission-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 120px;
+            font-size: 0.9rem;
+        }
+        .submission-value {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 1rem;
+            background: var(--bg-tertiary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            letter-spacing: 0.02em;
+        }
+        .submission-value.editable {
+            border: 1px dashed var(--border-color);
+            cursor: text;
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+        .submission-value.editable:hover {
+            border-color: #f59e0b;
+            background: var(--bg-card-hover);
+        }
+        .submission-value.blank {
+            color: var(--text-tertiary);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        /* ==================== SEARCH & FILTER ==================== */
+        .search-filter-section {
+            padding: 20px 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .search-filter-inner {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            align-items: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .search-input-wrap {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+        .search-input-wrap input {
+            width: 100%;
+            padding: 14px 20px 14px 46px;
+            border-radius: 100px;
+            border: 1.5px solid var(--border-color);
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.35s ease;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+        }
+        .search-input-wrap input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+        }
+        .search-input-wrap i {
+            position: absolute;
+            left: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 1rem;
+            pointer-events: none;
+        }
+        .filter-chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .filter-chip {
+            padding: 10px 18px;
+            border-radius: 100px;
+            border: 1.5px solid var(--border-color);
+            background: var(--glass-bg);
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+            font-family: 'Inter', sans-serif;
+        }
+        .filter-chip:hover,
+        .filter-chip.active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.08);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+        }
+
+        /* ==================== UNIT SECTIONS ==================== */
+        .unit-section {
+            padding: 50px 0 70px;
+            position: relative;
+            z-index: 1;
+            scroll-margin-top: 100px;
+        }
+        .unit-section-header {
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .unit-section-number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 10px;
+        }
+        .unit-section:nth-of-type(1) .unit-section-number {
+            background: rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+        }
+        .unit-section:nth-of-type(2) .unit-section-number {
+            background: rgba(236, 72, 153, 0.2);
+            color: #f472b6;
+        }
+        .unit-section:nth-of-type(3) .unit-section-number {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+        .unit-section:nth-of-type(4) .unit-section-number {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+        .unit-section:nth-of-type(5) .unit-section-number {
+            background: rgba(244, 63, 94, 0.2);
+            color: #fb7185;
+        }
+        .unit-section-title {
+            font-family: 'Space Grotesk', 'Outfit', sans-serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .unit-section-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 650px;
+            margin-top: 8px;
+            line-height: 1.7;
+        }
+
+        /* Content cards */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 18px;
+            margin-top: 24px;
+        }
+        .content-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 22px 24px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow-violet);
+            border-color: transparent;
+        }
+        .content-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(236, 72, 153, 0.05));
+        }
+        .content-card:hover::after {
+            opacity: 1;
+        }
+        .content-card h4 {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+        .content-card p {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            line-height: 1.5;
+        }
+        .content-card .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .content-card .card-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            margin-top: 8px;
+            background: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+        }
+
+        /* Expandable blocks */
+        .expandable-block {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 18px;
+            margin-top: 14px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .expandable-block:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .expandable-header {
+            padding: 16px 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.01em;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+        .expandable-header:hover {
+            background: var(--bg-card-hover);
+        }
+        .expandable-header i {
+            transition: transform 0.4s ease;
+            color: #f59e0b;
+            font-size: 0.9rem;
+        }
+        .expandable-block.open .expandable-header i {
+            transform: rotate(180deg);
+        }
+        .expandable-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            padding: 0 22px;
+        }
+        .expandable-block.open .expandable-body {
+            max-height: 500px;
+            padding: 0 22px 18px;
+        }
+        .expandable-body ul {
+            list-style: none;
+            padding: 0;
+        }
+        .expandable-body ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .expandable-body ul li::before {
+            content: '◆';
+            font-size: 0.5rem;
+            color: #f59e0b;
+        }
+
+        /* Tabs */
+        .tabs-wrap {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 100px;
+            border: 1.5px solid var(--border-color);
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+        }
+        .tab-btn:hover,
+        .tab-btn.active {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Insight badges */
+        .insight-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+        .insight-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 100px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .insight-badge:hover {
+            border-color: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
+        }
+
+        /* Progress mini bar */
+        .mini-progress {
+            height: 6px;
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .mini-progress-fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1.5s ease;
+            background: linear-gradient(90deg, #f59e0b, #ec4899, #8b5cf6);
+        }
+
+        /* Key takeaway card */
+        .takeaway-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(236, 72, 153, 0.05));
+            border: 1.5px solid rgba(245, 158, 11, 0.25);
+            border-radius: 18px;
+            padding: 20px 24px;
+            margin-top: 20px;
+            position: relative;
+        }
+        .takeaway-card::before {
+            content: '💡 Key Takeaway';
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 0.04em;
+            color: #f59e0b;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .takeaway-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ==================== BACK TO TOP ==================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 9998;
+            box-shadow: 0 8px 28px rgba(139, 92, 246, 0.45);
+            transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .back-to-top:hover {
+            transform: translateY(-6px) scale(1.08);
+            box-shadow: 0 14px 36px rgba(236, 72, 153, 0.55);
+        }
+
+        /* ==================== FOOTER ==================== */
+        .premium-footer {
+            padding: 50px 0 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+        .footer-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ec4899;
+            z-index: -1;
+        }
+        .premium-footer p {
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+        .premium-footer .footer-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .unit-cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 14px;
+            }
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--nav-bg);
+                backdrop-filter: blur(20px);
+                padding: 16px;
+                gap: 4px;
+                border-bottom: 1px solid var(--border-color);
+                box-shadow: var(--shadow-lg);
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .mobile-nav-toggle {
+                display: block;
+            }
+            .nav-inner {
+                padding: 0 16px;
+            }
+            .hero-section {
+                padding: 120px 16px 60px;
+            }
+            .unit-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .submission-card {
+                padding: 24px 20px;
+            }
+            .search-filter-inner {
+                flex-direction: column;
+            }
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .unit-cards-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .unit-card-inner {
+                padding: 18px 12px;
+                border-radius: 18px;
+            }
+            .unit-card-icon {
+                font-size: 1.8rem;
+            }
+            .unit-card-number {
+                font-size: 1.2rem;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Canvas for particle/network background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Scroll Progress -->
+    <div id="scroll-progress"></div>
+
+    <!-- Sticky Navigation -->
+    <nav class="sticky-nav" id="stickyNav">
+        <div class="nav-inner">
+            <span class="nav-logo">✦ AI/ML Dashboard</span>
+            <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="active" data-section="hero">Home</a></li>
+                <li><a href="#submission" data-section="submission">Info</a></li>
+                <li><a href="#unit1" data-section="unit1">Unit 1</a></li>
+                <li><a href="#unit2" data-section="unit2">Unit 2</a></li>
+                <li><a href="#unit3" data-section="unit3">Unit 3</a></li>
+                <li><a href="#unit4" data-section="unit4">Unit 4</a></li>
+                <li><a href="#unit5" data-section="unit5">Unit 5</a></li>
+            </ul>
+            <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode" role="switch" aria-checked="true" aria-label="Theme toggle">
+                <span class="toggle-icon moon">🌙</span>
+                <span class="toggle-icon sun">☀️</span>
+                <div class="toggle-knob"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- ==================== HERO SECTION ==================== -->
+        <section class="hero-section reveal" id="hero">
+            <div class="hero-orbs">
+                <div class="hero-orb"></div><div class="hero-orb"></div><div class="hero-orb"></div><div class="hero-orb"></div>
+            </div>
+            <div class="hero-badge">
+                <span class="pulse-dot"></span> Premium Study Portal • 2025 Edition
+            </div>
+            <h1 class="hero-title">AI & ML Notes<br>Dashboard</h1>
+            <p class="hero-subtitle">Organized Study Material for All Units — A luxurious, interactive learning experience crafted for the modern AI enthusiast. Explore neural networks, data science, and machine learning with elegance.</p>
+            <div class="hero-cta-group">
+                <a href="#unit1" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Explore Units</a>
+                <a href="#submission" class="btn btn-secondary"><i class="fa-solid fa-id-card"></i> Submission Info</a>
+            </div>
+        </section>
+
+        <!-- ==================== SUBMISSION INFO ==================== -->
+        <section class="submission-section reveal" id="submission">
+            <div class="submission-card">
+                <div class="submission-title"><i class="fa-solid fa-graduation-cap"></i> Academic Submission</div>
+                <div class="submission-row">
+                    <span class="submission-label">Submitted By:</span>
+                    <span class="submission-value">Priyanshu Pandey</span>
+                </div>
+                <div class="submission-row">
+                    <span class="submission-label"></span>
+                    <span class="submission-value">Priyanshu Kumar</span>
+
+                </div>
+                <div class="submission-row">
+                    <span class="submission-label"></span>
+                    <span class="submission-value">Abhishek Kumar</span>
+
+                </div>
+                <div class="submission-row" style="margin-top:12px;">
+                    <span class="submission-label">Submitted To:</span>
+                    <span class="submission-value">Mr. Deepak Saini and Mrs. Shilpy Sharma</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SEARCH & FILTER ==================== -->
+        <section class="search-filter-section reveal" id="searchFilter">
+            <div class="search-filter-inner">
+                <div class="search-input-wrap">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search topics, algorithms, units...">
+                </div>
+                <div class="filter-chips">
+                    <span class="filter-chip active" data-filter="all">All Units</span>
+                    <span class="filter-chip" data-filter="unit1">Unit 1</span>
+                    <span class="filter-chip" data-filter="unit2">Unit 2</span>
+                    <span class="filter-chip" data-filter="unit3">Unit 3</span>
+                    <span class="filter-chip" data-filter="unit4">Unit 4</span>
+                    <span class="filter-chip" data-filter="unit5">Unit 5</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT NAVIGATION CARDS ==================== -->
+        <section class="unit-cards-grid reveal" id="unitCardsGrid">
+            <div class="unit-card" data-unit="unit1" onclick="scrollToSection('unit1')">
+                <div class="unit-card-inner">
+                    <div class="unit-card-glow"></div>
+                    <span class="unit-card-icon">🧠</span>
+                    <div class="unit-card-number">Unit 1</div>
+                    <div class="unit-card-label">Intro to AI & ML</div>
+                </div>
+            </div>
+            <div class="unit-card" data-unit="unit2" onclick="scrollToSection('unit2')">
+                <div class="unit-card-inner">
+                    <div class="unit-card-glow"></div>
+                    <span class="unit-card-icon">📊</span>
+                    <div class="unit-card-number">Unit 2</div>
+                    <div class="unit-card-label">Data & Features</div>
+                </div>
+            </div>
+            <div class="unit-card" data-unit="unit3" onclick="scrollToSection('unit3')">
+                <div class="unit-card-inner">
+                    <div class="unit-card-glow"></div>
+                    <span class="unit-card-icon">🎯</span>
+                    <div class="unit-card-number">Unit 3</div>
+                    <div class="unit-card-label">Supervised Learning</div>
+                </div>
+            </div>
+            <div class="unit-card" data-unit="unit4" onclick="scrollToSection('unit4')">
+                <div class="unit-card-inner">
+                    <div class="unit-card-glow"></div>
+                    <span class="unit-card-icon">🔍</span>
+                    <div class="unit-card-number">Unit 4</div>
+                    <div class="unit-card-label">Unsupervised & Eval</div>
+                </div>
+            </div>
+            <div class="unit-card" data-unit="unit5" onclick="scrollToSection('unit5')">
+                <div class="unit-card-inner">
+                    <div class="unit-card-glow"></div>
+                    <span class="unit-card-icon">⚡</span>
+                    <div class="unit-card-number">Unit 5</div>
+                    <div class="unit-card-label">Neural Networks</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT 1 ==================== -->
+        <section class="unit-section reveal" id="unit1" data-unit="unit1">
+            <div class="unit-section-header">
+                <span class="unit-section-number">Unit 1</span>
+                <h2 class="unit-section-title">Introduction to AI & Machine Learning</h2>
+                <p class="unit-section-desc">Discover the foundations of artificial intelligence — from its philosophical origins to modern machine learning workflows. Understand what AI truly means and how it shapes our world.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card" onclick="this.classList.toggle('expanded-card')">
+                    <span class="card-icon">📖</span>
+                    <h4>Meaning of AI, ML & Data Science</h4>
+                    <p>AI is the simulation of human intelligence by machines. ML is a subset focused on learning from data. Data Science combines statistics, programming, and domain expertise to extract insights.</p>
+                    <span class="card-tag">Core Concept</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📜</span>
+                    <h4>History & Evolution of AI</h4>
+                    <p>From Turing's 1950 paper to the deep learning revolution of the 2010s — explore the key milestones: Dartmouth Workshop (1956), AI winters, expert systems, and the rise of generative AI.</p>
+                    <span class="card-tag">Timeline</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🔬</span>
+                    <h4>AI vs ML vs Deep Learning</h4>
+                    <p>AI is the broadest concept. ML is a way to achieve AI through data-driven learning. Deep Learning uses multi-layered neural networks for complex pattern recognition — a subset of ML.</p>
+                    <span class="card-tag">Hierarchy</span>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>📋 Types of AI — Detailed Breakdown</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Narrow AI (ANI):</strong> Specialized in one task — e.g., Siri, recommendation systems, self-driving car perception.</li>
+                        <li><strong>General AI (AGI):</strong> Hypothetical AI with human-level cognition across all domains — still theoretical.</li>
+                        <li><strong>Super AI (ASI):</strong> Surpasses human intelligence — purely speculative, raises ethical concerns.</li>
+                        <li><strong>Reactive Machines:</strong> No memory, respond to stimuli — e.g., Deep Blue chess engine.</li>
+                        <li><strong>Limited Memory:</strong> Use past data for decisions — most modern ML models fall here.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>🌍 Real-World Applications of AI</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li>Healthcare: Disease diagnosis, drug discovery, personalized medicine.</li>
+                        <li>Finance: Fraud detection, algorithmic trading, credit scoring.</li>
+                        <li>Transportation: Autonomous vehicles, route optimization, traffic prediction.</li>
+                        <li>Entertainment: Content recommendation (Netflix, Spotify), game AI.</li>
+                        <li>Agriculture: Crop monitoring, yield prediction, precision farming.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tabs-wrap">
+                <button class="tab-btn active" onclick="switchTab(this, 'tab-u1-1')">ML Workflow</button>
+                <button class="tab-btn" onclick="switchTab(this, 'tab-u1-2')">Key Insights</button>
+            </div>
+            <div class="tab-content active" id="tab-u1-1">
+                <div class="content-card">
+                    <h4>🔁 Basic ML Workflow</h4>
+                    <p>1. Problem Definition → 2. Data Collection → 3. Data Preprocessing → 4. Model Selection → 5. Training → 6. Evaluation → 7. Deployment → 8. Monitoring</p>
+                    <div class="mini-progress"><div class="mini-progress-fill" style="width:75%"></div></div>
+                    <span style="font-size:0.8rem;color:var(--text-tertiary);">Workflow Mastery: 75%</span>
+                </div>
+            </div>
+            <div class="tab-content" id="tab-u1-2">
+                <div class="insight-row">
+                    <span class="insight-badge">📌 AI market size: $500B+ by 2030</span>
+                    <span class="insight-badge">🧠 ML is the driving force behind modern AI</span>
+                    <span class="insight-badge">⚡ Deep Learning powers GPT, vision models</span>
+                </div>
+            </div>
+            <div class="takeaway-card">
+                <p>AI is not magic — it's mathematics, data, and clever algorithms working together. Understanding the fundamentals of ML workflow is your gateway to building intelligent systems that solve real problems.</p>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT 2 ==================== -->
+        <section class="unit-section reveal" id="unit2" data-unit="unit2">
+            <div class="unit-section-header">
+                <span class="unit-section-number">Unit 2</span>
+                <h2 class="unit-section-title">Data Preparation & Feature Engineering</h2>
+                <p class="unit-section-desc">Data is the fuel of machine learning. Master the art of cleaning, transforming, and engineering features to build robust, high-performing models.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🗂️</span>
+                    <h4>Data Collection & Cleaning</h4>
+                    <p>Gather data from APIs, databases, or scraping. Clean by removing duplicates, fixing typos, and handling outliers. Garbage in = garbage out.</p>
+                    <span class="card-tag">Foundation</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🩹</span>
+                    <h4>Handling Missing Values</h4>
+                    <p>Strategies: deletion (listwise/pairwise), mean/median imputation, KNN imputation, MICE, or using algorithms that handle missing data natively.</p>
+                    <span class="card-tag">Critical Skill</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📐</span>
+                    <h4>Normalization & Standardization</h4>
+                    <p>Min-Max scaling maps values to [0,1]. Z-score standardization centers data around zero mean with unit variance. Essential for distance-based algorithms.</p>
+                    <span class="card-tag">Preprocessing</span>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>🔧 Feature Selection & Engineering</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Feature Selection:</strong> Filter methods (correlation, chi-square), wrapper methods (RFE), embedded methods (LASSO, tree importance).</li>
+                        <li><strong>Feature Engineering:</strong> Creating new features from existing ones — polynomial features, interaction terms, domain-specific transformations.</li>
+                        <li><strong>Encoding:</strong> One-hot, label, ordinal, target encoding for categorical variables.</li>
+                        <li><strong>Binning:</strong> Converting continuous variables to categorical buckets for simpler patterns.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>✂️ Train/Test Split & Overfitting</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Train/Test Split:</strong> Typically 70/30 or 80/20. Use stratified splitting for imbalanced datasets.</li>
+                        <li><strong>Overfitting:</strong> Model learns noise — high variance, poor generalization. Fix: regularization, more data, simpler models.</li>
+                        <li><strong>Underfitting:</strong> Model too simple — high bias, misses patterns. Fix: more features, complex models, longer training.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="takeaway-card">
+                <p>Data preparation consumes 60-80% of a data scientist's time. Clean, well-engineered features often matter more than the choice of algorithm. Master this, and you master ML.</p>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT 3 ==================== -->
+        <section class="unit-section reveal" id="unit3" data-unit="unit3">
+            <div class="unit-section-header">
+                <span class="unit-section-number">Unit 3</span>
+                <h2 class="unit-section-title">Supervised Learning Algorithms</h2>
+                <p class="unit-section-desc">Explore the most widely used ML algorithms — from simple linear models to powerful ensemble methods — all trained on labeled data to make predictions.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">📈</span>
+                    <h4>Linear & Logistic Regression</h4>
+                    <p>Linear regression predicts continuous values. Logistic regression handles binary classification using the sigmoid function to output probabilities.</p>
+                    <span class="card-tag">Regression</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🌳</span>
+                    <h4>Decision Trees & Random Forest</h4>
+                    <p>Decision trees split data recursively. Random Forest ensembles many trees with bootstrapping and feature randomization for robust predictions.</p>
+                    <span class="card-tag">Ensemble</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🎯</span>
+                    <h4>SVM & K-Nearest Neighbors</h4>
+                    <p>SVM finds optimal hyperplanes with kernel tricks for non-linear data. KNN classifies based on majority vote of K closest neighbors — simple but effective.</p>
+                    <span class="card-tag">Classification</span>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>📚 Naive Bayes & Model Training Concepts</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Naive Bayes:</strong> Based on Bayes' theorem with "naive" independence assumption. Great for text classification, spam detection.</li>
+                        <li><strong>Gradient Descent:</strong> Iterative optimization algorithm — batch, stochastic, mini-batch variants.</li>
+                        <li><strong>Loss Functions:</strong> MSE for regression, cross-entropy for classification, hinge loss for SVM.</li>
+                        <li><strong>Regularization:</strong> L1 (LASSO) for sparsity, L2 (Ridge) for weight shrinkage, Elastic Net combines both.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tabs-wrap">
+                <button class="tab-btn active" onclick="switchTab(this, 'tab-u3-1')">Algorithm Comparison</button>
+                <button class="tab-btn" onclick="switchTab(this, 'tab-u3-2')">Training Tips</button>
+            </div>
+            <div class="tab-content active" id="tab-u3-1">
+                <div class="insight-row">
+                    <span class="insight-badge">🏆 Random Forest: High accuracy, handles non-linearity</span>
+                    <span class="insight-badge">⚡ Naive Bayes: Fast, great for text</span>
+                    <span class="insight-badge">🎯 SVM: Excellent for high-dimensional data</span>
+                    <span class="insight-badge">📊 Linear Regression: Interpretable baseline</span>
+                </div>
+            </div>
+            <div class="tab-content" id="tab-u3-2">
+                <p style="color:var(--text-secondary);">Always start with a simple baseline model. Use cross-validation for reliable evaluation. Hyperparameter tuning (Grid Search, Bayesian Optimization) can significantly boost performance.</p>
+            </div>
+            <div class="takeaway-card">
+                <p>No single algorithm dominates all problems. The art of ML lies in understanding your data and selecting the right tool for each unique challenge.</p>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT 4 ==================== -->
+        <section class="unit-section reveal" id="unit4" data-unit="unit4">
+            <div class="unit-section-header">
+                <span class="unit-section-number">Unit 4</span>
+                <h2 class="unit-section-title">Unsupervised Learning & Model Evaluation</h2>
+                <p class="unit-section-desc">Discover patterns without labels. Cluster data, reduce dimensions, and rigorously evaluate your models using industry-standard metrics.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🔮</span>
+                    <h4>K-Means & Hierarchical Clustering</h4>
+                    <p>K-Means partitions data into K clusters via centroid iteration. Hierarchical clustering builds dendrograms — agglomerative (bottom-up) or divisive (top-down).</p>
+                    <span class="card-tag">Clustering</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🌌</span>
+                    <h4>DBSCAN & Dimensionality Reduction</h4>
+                    <p>DBSCAN identifies clusters of arbitrary shape based on density. PCA reduces feature dimensions while preserving maximum variance — essential for visualization.</p>
+                    <span class="card-tag">Advanced</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">📊</span>
+                    <h4>Confusion Matrix & Metrics</h4>
+                    <p>Accuracy, Precision, Recall, F1-Score — understand the trade-offs. ROC-AUC for binary classifiers. Know when each metric matters most.</p>
+                    <span class="card-tag">Evaluation</span>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>✅ Cross-Validation Deep Dive</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>K-Fold CV:</strong> Split data into K folds, train on K-1, validate on 1 — rotate and average results.</li>
+                        <li><strong>Stratified K-Fold:</strong> Preserves class distribution across folds — crucial for imbalanced data.</li>
+                        <li><strong>Leave-One-Out CV:</strong> Extreme case where K=N — computationally expensive but thorough.</li>
+                        <li><strong>Time Series Split:</strong> Respects temporal order — forward chaining for time-dependent data.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="takeaway-card">
+                <p>Evaluation isn't an afterthought — it's the compass that guides model development. A model that can't be properly evaluated can't be trusted in production.</p>
+            </div>
+        </section>
+
+        <!-- ==================== UNIT 5 ==================== -->
+        <section class="unit-section reveal" id="unit5" data-unit="unit5">
+            <div class="unit-section-header">
+                <span class="unit-section-number">Unit 5</span>
+                <h2 class="unit-section-title">Neural Networks, Deep Learning & Deployment</h2>
+                <p class="unit-section-desc">Journey into the world of artificial neural networks — from simple perceptrons to CNNs, RNNs, and deploying models into production with MLOps best practices.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="card-icon">🧬</span>
+                    <h4>ANN & Perceptron Model</h4>
+                    <p>The perceptron is the simplest neural unit. Multi-layer perceptrons (MLPs) stack layers with activation functions to approximate any continuous function.</p>
+                    <span class="card-tag">Foundation</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">⚡</span>
+                    <h4>Activation Functions & Backpropagation</h4>
+                    <p>ReLU, Sigmoid, Tanh, Softmax — each serves a purpose. Backpropagation uses the chain rule to compute gradients for weight updates via gradient descent.</p>
+                    <span class="card-tag">Core Mechanism</span>
+                </div>
+                <div class="content-card">
+                    <span class="card-icon">🖼️</span>
+                    <h4>CNN & RNN Architectures</h4>
+                    <p>CNNs excel at spatial data (images) with convolution and pooling layers. RNNs/LSTMs handle sequential data (text, time series) with memory cells.</p>
+                    <span class="card-tag">Deep Learning</span>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>🚀 Model Deployment & MLOps</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Deployment Options:</strong> REST APIs (Flask/FastAPI), containerization (Docker), cloud services (AWS SageMaker, GCP Vertex AI).</li>
+                        <li><strong>MLOps:</strong> CI/CD for ML, model versioning, experiment tracking, automated retraining pipelines.</li>
+                        <li><strong>Model Serving:</strong> TensorFlow Serving, TorchServe, ONNX Runtime for production inference.</li>
+                        <li><strong>Monitoring:</strong> Data drift detection, model performance tracking, alerting systems.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="expandable-block">
+                <div class="expandable-header" onclick="toggleExpandable(this)">
+                    <span>🤝 Ethics & Responsible AI</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="expandable-body">
+                    <ul>
+                        <li><strong>Fairness:</strong> Ensure models don't discriminate based on race, gender, or other protected attributes.</li>
+                        <li><strong>Transparency:</strong> Explainable AI (XAI) — SHAP, LIME for interpreting model decisions.</li>
+                        <li><strong>Privacy:</strong> Federated learning, differential privacy, data anonymization techniques.</li>
+                        <li><strong>Accountability:</strong> Clear ownership, audit trails, and human-in-the-loop oversight.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="takeaway-card">
+                <p>Deep learning powers today's most impressive AI systems. But with great power comes great responsibility — ethical AI is not optional, it's imperative for a trustworthy future.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="premium-footer reveal">
+        <div class="footer-glow"></div>
+        <span class="footer-brand">✦ AI & ML Notes Dashboard</span>
+        <p>Designed with passion • Built for learners • Powered by knowledge</p>
+        <p style="margin-top:4px;font-size:0.8rem;">&copy; 2025 Premium Study Portal. All rights reserved.</p>
+    </footer>
+
+    <!-- ==================== BACK TO TOP ==================== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // ==================== THEME TOGGLE ====================
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            themeToggle.setAttribute('aria-checked', next === 'dark');
+            localStorage.setItem('theme', next);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        html.setAttribute('data-theme', savedTheme);
+        themeToggle.setAttribute('aria-checked', savedTheme === 'dark');
+
+        // ==================== SCROLL PROGRESS ====================
+        const scrollProgress = document.getElementById('scrollProgress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+            scrollProgress.style.width = progress + '%';
+        });
+
+        // ==================== STICKY NAV SCROLL EFFECT ====================
+        const stickyNav = document.getElementById('stickyNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                stickyNav.classList.add('scrolled');
+            } else {
+                stickyNav.classList.remove('scrolled');
+            }
+        });
+
+        // ==================== BACK TO TOP ====================
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ==================== MOBILE NAV TOGGLE ====================
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const navLinks = document.getElementById('navLinks');
+        mobileNavToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+        // Close on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ==================== ACTIVE SECTION HIGHLIGHTING ====================
+        const allNavLinks = document.querySelectorAll('.nav-links a');
+        const allUnitCards = document.querySelectorAll('.unit-card');
+        const sections = document.querySelectorAll('section[id]');
+
+        function updateActiveNav() {
+            let currentSection = 'hero';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150) {
+                    currentSection = section.id;
+                }
+            });
+
+            allNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === currentSection) {
+                    link.classList.add('active');
+                }
+            });
+
+            allUnitCards.forEach(card => {
+                card.classList.remove('active');
+                if (card.getAttribute('data-unit') === currentSection) {
+                    card.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav);
+
+        // ==================== SCROLL TO SECTION ====================
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ==================== EXPANDABLE BLOCKS ====================
+        function toggleExpandable(header) {
+            const block = header.parentElement;
+            block.classList.toggle('open');
+        }
+
+        // ==================== TABS ====================
+        function switchTab(btn, tabId) {
+            const tabsWrap = btn.parentElement;
+            const section = tabsWrap.closest('.unit-section') || tabsWrap.closest('section');
+
+            // Deactivate all tabs in this group
+            tabsWrap.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Hide all tab contents in this section
+            const allContents = section.querySelectorAll('.tab-content');
+            allContents.forEach(c => c.classList.remove('active'));
+
+            // Show the target
+            const target = document.getElementById(tabId);
+            if (target) target.classList.add('active');
+        }
+
+        // ==================== SEARCH & FILTER ====================
+        const searchInput = document.getElementById('searchInput');
+        const filterChips = document.querySelectorAll('.filter-chip');
+        let activeFilter = 'all';
+
+        filterChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                filterChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+                activeFilter = chip.getAttribute('data-filter');
+                applySearchAndFilter();
+            });
+        });
+
+        searchInput.addEventListener('input', applySearchAndFilter);
+
+        function applySearchAndFilter() {
+            const query = searchInput.value.toLowerCase();
+            const unitSections = document.querySelectorAll('.unit-section');
+            const unitCards = document.querySelectorAll('.unit-card');
+            const contentCards = document.querySelectorAll('.content-card');
+            const expandableBlocks = document.querySelectorAll('.expandable-block');
+
+            // Filter unit sections
+            unitSections.forEach(section => {
+                const unitData = section.getAttribute('data-unit');
+                const sectionText = section.textContent.toLowerCase();
+                const matchesFilter = activeFilter === 'all' || unitData === activeFilter;
+                const matchesSearch = query === '' || sectionText.includes(query);
+                section.style.display = (matchesFilter && matchesSearch) ? '' : 'none';
+            });
+
+            // Filter unit cards
+            unitCards.forEach(card => {
+                const unitData = card.getAttribute('data-unit');
+                const cardText = card.textContent.toLowerCase();
+                const matchesFilter = activeFilter === 'all' || unitData === activeFilter;
+                const matchesSearch = query === '' || cardText.includes(query);
+                card.style.display = (matchesFilter && matchesSearch) ? '' : 'none';
+            });
+
+            // Highlight matching content cards
+            contentCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (query && text.includes(query)) {
+                    card.style.boxShadow = '0 0 30px rgba(245,158,11,0.5)';
+                    card.style.borderColor = '#f59e0b';
+                } else {
+                    card.style.boxShadow = '';
+                    card.style.borderColor = '';
+                }
+            });
+        }
+
+        // ==================== SCROLL REVEAL ====================
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ==================== PARTICLE CANVAS BACKGROUND ====================
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Create particles
+        function createParticles() {
+            particles = [];
+            const count = Math.min(Math.floor(window.innerWidth * 0.08), 120);
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2.5 + 1,
+                    color: ['#f59e0b', '#ec4899', '#8b5cf6', '#10b981', '#f43f5e', '#f97316'][
+                        Math.floor(Math.random() * 6)
+                    ],
+                    alpha: Math.random() * 0.5 + 0.2,
+                });
+            }
+        }
+        createParticles();
+        window.addEventListener('resize', createParticles);
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connections
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 140) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        const alpha = (1 - dist / 140) * 0.15;
+                        ctx.strokeStyle = `rgba(245,158,11,${alpha})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw particles
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color.replace(')', `, ${p.alpha})`).replace('rgb',
+                    'rgba');
+                if (p.color.startsWith('#')) {
+                    const hex = p.color;
+                    const r = parseInt(hex.slice(1, 3), 16);
+                    const g = parseInt(hex.slice(3, 5), 16);
+                    const b = parseInt(hex.slice(5, 7), 16);
+                    ctx.fillStyle = `rgba(${r},${g},${b},${p.alpha})`;
+                }
+                ctx.fill();
+                ctx.shadowColor = p.color;
+                ctx.shadowBlur = 8;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        function updateParticles() {
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+            });
+        }
+
+        function animateParticles() {
+            updateParticles();
+            drawParticles();
+            animationId = requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ==================== INITIAL SETUP ====================
+        updateActiveNav();
+
+        // Log
+        console.log('%c🚀 AI & ML Notes Dashboard Ready %c| %cPremium Edition',
+            'font-size:1.2em;color:#f59e0b;',
+            '',
+            'color:#ec4899;');
+        console.log('%cTheme: %cVibrant Multi-Color %c| %cNo Blue Allowed ✨',
+            'color:#8b5cf6;', 'color:#f59e0b;', '', 'color:#10b981;');
+        console.log('%cAll systems operational. Enjoy the experience!',
+            'color:var(--text-secondary);');
+    </script>
+</body>
+</html>
